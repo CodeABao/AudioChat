@@ -1,0 +1,33 @@
+{
+  "message": {
+    "id": "44acbbee-c166-4df0-a248-b7d7d1b69eef",
+    "author": {
+      "role": "assistant",
+      "name": null,
+      "metadata": {
+      }
+    },
+    "create_time": 1687855589.185851,
+    "update_time": null,
+    "content": {
+      "content_type": "text",
+      "parts": [
+        "LeBron James, as of my knowledge cutoff in September 2021, was born on December 30, 1984. Therefore, his age would depend on the current date. If you provide me with the current date, I can calculate his approximate age for you."
+      ]
+    },
+    "status": "finished_successfully",
+    "end_turn": true,
+    "weight": 1.0,
+    "metadata": {
+      "message_type": "next",
+      "model_slug": "text-davinci-002-render-sha",
+      "finish_details": {
+        "type": "stop",
+        "stop": "<|diff_marker|>"
+      }
+    },
+    "recipient": "all"
+  },
+  "conversation_id": "ef83ba76-b6f2-4e7e-b840-cf132799fd6c",
+  "error": null
+}
