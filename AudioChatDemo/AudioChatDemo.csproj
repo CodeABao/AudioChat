@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EdgeTTS.Framework" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
+    <PackageReference Include="Microsoft.Web.WebView2.DevToolsProtocolExtension" Version="1.0.824" />
+    <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="Whisper.net" Version="1.4.5" />
+    <PackageReference Include="Whisper.net.Runtime" Version="1.4.5" />
+    <PackageReference Include="Whisper.net.Runtime.Cublas" Version="1.4.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="scripts\comment.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
