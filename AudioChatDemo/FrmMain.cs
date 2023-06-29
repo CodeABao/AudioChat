@@ -41,7 +41,7 @@ namespace AudioChatDemo
             helper = webView21.CoreWebView2.GetDevToolsProtocolHelper();
             Bridge bridge = new Bridge(helper, webView21);
 
-            webView21.CoreWebView2.WebResourceResponseReceived += CoreWebView2_WebResourceResponseReceived1;
+            webView21.CoreWebView2.WebResourceResponseReceived += CoreWebView2_WebResourceResponseReceived;
             webView21.CoreWebView2.AddHostObjectToScript("bridge", bridge);
 
 
@@ -57,31 +57,50 @@ namespace AudioChatDemo
 
         }
 
-        private async void CoreWebView2_WebResourceResponseReceived1(object? sender, CoreWebView2WebResourceResponseReceivedEventArgs e)
+        private async void CoreWebView2_WebResourceResponseReceived(object? sender, CoreWebView2WebResourceResponseReceivedEventArgs e)
         {
-            if (e.Request.Uri.StartsWith("https://chat.openai.com/backend-api/conversation"))
+            if (isStart)
             {
-                using (var data = await e.Response.GetContentAsync())
+                if (e.Request.Uri.StartsWith("https://chat.openai.com/backend-api/conversation"))
                 {
-                    if (data != null)
+                    using (var data = await e.Response.GetContentAsync())
                     {
-                        StreamReader streamReader = new StreamReader(data);
-                        string context = streamReader.ReadToEnd();
+                        if (data != null)
+                        {
+                            StreamReader streamReader = new StreamReader(data);
+                            string context = streamReader.ReadToEnd();
 
-                        System.Console.WriteLine("<<" + context + ">>");
-                    }
-                    else
-                    {
-                        //TODO:获取内容
-                        await webView21.CoreWebView2.ExecuteScriptAsync("DOUYINDATA.GetResponse()");
+                            System.Console.WriteLine("<<" + context + ">>");
+                        }
+                        else
+                        {
+                            //TODO:获取内容
+                            await webView21.CoreWebView2.ExecuteScriptAsync("DOUYINDATA.GetResponse()");
+                        }
                     }
                 }
             }
         }
 
+        bool isStart = false;
         private void btnStart_Click(object sender, EventArgs e)
         {
-            voice = cbVoices.Text.Split('|').FirstOrDefault();
+            if (isStart)
+            {
+                isStart = false;
+                btnSound.Text = "开始";
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(cbVoices.Text))
+                {
+                    MessageBox.Show("请先选择话说角色");
+                    return;
+                }
+                isStart = true;
+                btnSound.Text = "结束";
+                voice = cbVoices.Text.Split('|').FirstOrDefault();
+            }
         }
 
         WaveInEvent waveIn = null;
