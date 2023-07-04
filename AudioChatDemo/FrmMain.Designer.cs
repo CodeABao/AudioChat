@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            label1 = new Label();
-            textBox1 = new TextBox();
             label2 = new Label();
             cbVoices = new ComboBox();
             btnStart = new Button();
             btnSound = new Button();
             cnDevices = new ComboBox();
             设备 = new Label();
+            videoView1 = new LibVLCSharp.WinForms.VideoView();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)videoView1).BeginInit();
             SuspendLayout();
             // 
             // webView21
@@ -52,27 +52,10 @@
             webView21.TabIndex = 0;
             webView21.ZoomFactor = 1D;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(877, 5);
-            label1.Name = "label1";
-            label1.Size = new Size(32, 17);
-            label1.TabIndex = 1;
-            label1.Text = "扮演";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(879, 25);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(332, 191);
-            textBox1.TabIndex = 2;
-            // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(879, 231);
+            label2.Location = new Point(879, 278);
             label2.Name = "label2";
             label2.Size = new Size(32, 17);
             label2.TabIndex = 3;
@@ -82,14 +65,14 @@
             // 
             cbVoices.FormattingEnabled = true;
             cbVoices.Items.AddRange(new object[] { "zh-CN-XiaoxiaoNeural|Female", "zh-CN-XiaoyiNeural|Female", "zh-CN-YunjianNeuralMale", "zh-CN-YunxiNeural|Male", "zh-CN-YunyangNeural|Male", "zh-CN-liaoning-XiaobeiNeural|Female", "zh-CN-shaanxi-XiaoniNeural|Female", "zh-TW-HsiaoChenNeural|Female", "zh-TW-HsiaoYuNeural|Female", "zh-TW-YunJheNeural|Male", "en-US-AnaNeural|Female", "en-US-AriaNeural|Female", "en-US-ChristopherNeural|Male", "en-US-EricNeural|Male" });
-            cbVoices.Location = new Point(879, 251);
+            cbVoices.Location = new Point(879, 298);
             cbVoices.Name = "cbVoices";
-            cbVoices.Size = new Size(332, 25);
+            cbVoices.Size = new Size(191, 25);
             cbVoices.TabIndex = 4;
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(1117, 292);
+            btnStart.Location = new Point(976, 339);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(94, 35);
             btnStart.TabIndex = 5;
@@ -101,7 +84,7 @@
             // 
             btnSound.Location = new Point(879, 600);
             btnSound.Name = "btnSound";
-            btnSound.Size = new Size(334, 35);
+            btnSound.Size = new Size(191, 35);
             btnSound.TabIndex = 6;
             btnSound.Text = "说话";
             btnSound.UseVisualStyleBackColor = true;
@@ -113,7 +96,7 @@
             cnDevices.Items.AddRange(new object[] { "zh-CN-XiaoxiaoNeural|Female", "zh-CN-XiaoyiNeural|Female", "zh-CN-YunjianNeuralMale", "zh-CN-YunxiNeural|Male", "zh-CN-YunyangNeural|Male", "zh-CN-liaoning-XiaobeiNeural|Female", "zh-CN-shaanxi-XiaoniNeural|Female", "zh-TW-HsiaoChenNeural|Female", "zh-TW-HsiaoYuNeural|Female", "zh-TW-YunJheNeural|Male", "en-US-AnaNeural|Female", "en-US-AriaNeural|Female", "en-US-ChristopherNeural|Male", "en-US-EricNeural|Male" });
             cnDevices.Location = new Point(881, 553);
             cnDevices.Name = "cnDevices";
-            cnDevices.Size = new Size(332, 25);
+            cnDevices.Size = new Size(189, 25);
             cnDevices.TabIndex = 7;
             // 
             // 设备
@@ -125,24 +108,35 @@
             设备.TabIndex = 8;
             设备.Text = "发声";
             // 
+            // videoView1
+            // 
+            videoView1.BackColor = Color.Black;
+            videoView1.Location = new Point(881, 3);
+            videoView1.MediaPlayer = null;
+            videoView1.Name = "videoView1";
+            videoView1.Size = new Size(189, 261);
+            videoView1.TabIndex = 9;
+            videoView1.Text = "videoView1";
+            // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1221, 681);
+            ClientSize = new Size(1078, 681);
+            Controls.Add(videoView1);
             Controls.Add(设备);
             Controls.Add(cnDevices);
             Controls.Add(btnSound);
             Controls.Add(btnStart);
             Controls.Add(cbVoices);
             Controls.Add(label2);
-            Controls.Add(textBox1);
-            Controls.Add(label1);
             Controls.Add(webView21);
             Name = "FrmMain";
             Text = "ChatGPT";
+            FormClosed += FrmMain_FormClosed;
             Load += FrmMain_Load;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
+            ((System.ComponentModel.ISupportInitialize)videoView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,13 +144,12 @@
         #endregion
 
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
-        private Label label1;
-        private TextBox textBox1;
         private Label label2;
         private ComboBox cbVoices;
         private Button btnStart;
         private Button btnSound;
         private ComboBox cnDevices;
         private Label 设备;
+        private LibVLCSharp.WinForms.VideoView videoView1;
     }
 }

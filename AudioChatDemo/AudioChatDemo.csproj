@@ -11,9 +11,12 @@
 
   <ItemGroup>
     <PackageReference Include="EdgeTTS.Framework" Version="1.0.1" />
+    <PackageReference Include="IronPython" Version="3.4.0" />
+    <PackageReference Include="LibVLCSharp.WinForms" Version="3.7.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
     <PackageReference Include="Microsoft.Web.WebView2.DevToolsProtocolExtension" Version="1.0.824" />
     <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
     <PackageReference Include="Whisper.net" Version="1.4.5" />
     <PackageReference Include="Whisper.net.Runtime" Version="1.4.5" />
     <PackageReference Include="Whisper.net.Runtime.Cublas" Version="1.4.5" />
@@ -24,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="default.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="scripts\comment.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

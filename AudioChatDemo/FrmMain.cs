@@ -1,4 +1,5 @@
 using EdgeTTS;
+using LibVLCSharp.Shared;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Core.DevToolsProtocolExtension;
 using Microsoft.Web.WebView2.WinForms;
@@ -16,6 +17,10 @@ namespace AudioChatDemo
         static string voice = "zh-CN-XiaoxiaoNeural";
         DevToolsProtocolHelper helper = null;
         WhisperProcessor whisperProcessor;
+        public LibVLC _libVLC;
+        public MediaPlayer _mp;
+
+        private string currentVideo = "";
         public FrmMain()
         {
             var factory = WhisperFactory.FromPath("D:\\AI\\Whisper\\whisper-bin-x64\\ggml-base.bin");
@@ -26,10 +31,34 @@ namespace AudioChatDemo
             whisperProcessor = builder.Build();
 
             InitializeComponent();
+
+            _libVLC = new LibVLC();
+            _mp = new MediaPlayer(_libVLC);
+            _mp.EndReached += _mp_EndReached; ;
+            videoView1.MediaPlayer = _mp;
+        }
+
+        private void _mp_EndReached(object sender, EventArgs e)
+        {
+            if (currentVideo == "default.mp4")
+            {
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    using (var media = new LibVLCSharp.Shared.Media(_libVLC, currentVideo))
+                    {
+                        _mp.Play(media);
+                    }
+                });
+            }
         }
 
         private async void FrmMain_Load(object sender, EventArgs e)
         {
+            currentVideo = "default.mp4";
+            using (var media = new LibVLCSharp.Shared.Media(_libVLC, currentVideo))
+            {
+                _mp.Play(media);
+            }
 
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions("--allow-no-sandbox-job");
             CoreWebView2Environment environment = await CoreWebView2Environment.CreateAsync(null, null, options);
@@ -216,6 +245,13 @@ namespace AudioChatDemo
             WaveOut wout = new WaveOut();
             wout.Init(reader);
             wout.Play();
+        }
+
+        private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _mp.Stop();
+            _mp.Dispose();
+            _libVLC.Dispose();
         }
     }
 
